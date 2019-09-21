@@ -1,6 +1,7 @@
 variable "domains" {
   default = [
-    "dashboard.internet.nl"
+    "dashboard.internet.nl",
+    "acc.dashboard.internet.nl",
   ]
 }
 
@@ -18,7 +19,7 @@ data "uptimerobot_alert_contact" "default_alert_contact" {
 
 resource "uptimerobot_monitor" "availability" {
   count         = length(var.domains)
-  friendly_name = "availability"
+  friendly_name = format("availability %s", var.domains[count.index])
   type          = "http"
   url           = format("https://%s", var.domains[count.index])
   # pro allows 60 seconds
@@ -31,7 +32,7 @@ resource "uptimerobot_monitor" "availability" {
 
 resource "uptimerobot_monitor" "ipv6_availability" {
   count         = length(var.domains)
-  friendly_name = "IPv6 availability"
+  friendly_name = format("IPv6 availability %s", var.domains[count.index])
   type          = "http"
   url           = format("https://ipv6.%s", var.domains[count.index])
   # pro allows 60 seconds
