@@ -36,7 +36,7 @@ resource "uptimerobot_monitor" "ipv6_availability" {
   type          = "http"
   url           = format("https://ipv6.%s", var.domains[count.index])
   # pro allows 60 seconds
-  interval = 600
+  interval = 300
 
   alert_contact {
     id = "${data.uptimerobot_alert_contact.default_alert_contact.id}"
